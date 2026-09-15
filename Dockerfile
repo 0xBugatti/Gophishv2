@@ -16,7 +16,7 @@ RUN gulp
 # ─────────────────────────────────────────────
 # Stage 2 – Compile Go binary
 # ─────────────────────────────────────────────
-FROM golang:1.24-bookworm AS build-golang
+FROM golang:1.27-bookworm AS build-golang
 
 WORKDIR /go/src/github.com/gophish/gophish
 COPY . .
