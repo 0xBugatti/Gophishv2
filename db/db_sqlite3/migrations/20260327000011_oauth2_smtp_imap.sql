@@ -1,0 +1,14 @@
+
+-- +goose Up
+-- 3.2: OAuth2/XOAUTH2 SMTP authentication
+ALTER TABLE smtp ADD COLUMN auth_type VARCHAR(16) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN client_id VARCHAR(512) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN client_secret VARCHAR(512) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN token_url VARCHAR(2048) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN refresh_token TEXT NOT NULL DEFAULT '';
+
+-- 3.3: OAuth2 IMAP authentication
+ALTER TABLE imap ADD COLUMN auth_type VARCHAR(16) NOT NULL DEFAULT '';
+
+-- +goose Down
+-- SQLite does not support DROP COLUMN

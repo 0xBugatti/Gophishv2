@@ -1,0 +1,23 @@
+{
+	"admin_server": {
+		"listen_url": "127.0.0.1:13333",
+		"use_tls": false,
+		"cert_path": "",
+		"key_path": "",
+		"trusted_origins": []
+	},
+	"phish_server": {
+		"listen_url": "127.0.0.1:18080",
+		"use_tls": false,
+		"cert_path": "",
+		"key_path": ""
+	},
+	"db_name": "sqlite3",
+	"db_path": "test_smoke.db",
+	"migrations_prefix": "db/db_",
+	"contact_address": "test@example.com",
+	"logging": {
+		"filename": "",
+		"level": ""
+	}
+}

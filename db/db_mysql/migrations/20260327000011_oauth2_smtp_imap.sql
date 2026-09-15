@@ -1,0 +1,19 @@
+
+-- +goose Up
+-- 3.2: OAuth2/XOAUTH2 SMTP authentication
+ALTER TABLE smtp ADD COLUMN auth_type VARCHAR(16) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN client_id VARCHAR(512) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN client_secret VARCHAR(512) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN token_url VARCHAR(2048) NOT NULL DEFAULT '';
+ALTER TABLE smtp ADD COLUMN refresh_token TEXT NOT NULL;
+
+-- 3.3: OAuth2 IMAP authentication
+ALTER TABLE imap ADD COLUMN auth_type VARCHAR(16) NOT NULL DEFAULT '';
+
+-- +goose Down
+ALTER TABLE smtp DROP COLUMN auth_type;
+ALTER TABLE smtp DROP COLUMN client_id;
+ALTER TABLE smtp DROP COLUMN client_secret;
+ALTER TABLE smtp DROP COLUMN token_url;
+ALTER TABLE smtp DROP COLUMN refresh_token;
+ALTER TABLE imap DROP COLUMN auth_type;

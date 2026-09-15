@@ -1,0 +1,121 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gophish - Phishing Toolkit">
+    <meta name="author" content="Jordan Wright (http://github.com/jordan-wright)">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+    <title>{{ .Title }} - Gophish</title>
+
+    <!-- Vendor bundle (Bootstrap, DataTables, etc.) -->
+    <link href="/css/dist/gophish.css" rel="stylesheet" type="text/css">
+    <link href="/css/campaign-sets.css" rel="stylesheet" type="text/css">
+    <!-- Legacy theme overrides kept for backwards compat -->
+    <link href="/css/dark-theme.css" rel="stylesheet" type="text/css">
+    <link href="/css/dark-crimson-theme.css" rel="stylesheet" type="text/css">
+    <!-- SOC Design System (loaded last to take precedence) -->
+    <link href="/css/soc-theme.css" rel="stylesheet" type="text/css">
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Apply theme class before first paint to prevent flash -->
+    <script>
+        (function () {
+            var t = localStorage.getItem('gophish.theme') || 'default';
+            if (t === 'dark-teal')    document.documentElement.classList.add('dark-theme');
+            else if (t === 'dark-crimson') document.documentElement.classList.add('crimson-theme');
+            else if (t === 'soc-dark')     document.documentElement.classList.add('soc-dark');
+        })();
+    </script>
+    <script>
+        {{if .User}}
+        var user = {
+            id: {{ .User.Id }},
+            api_key: {{ .User.ApiKey }},
+            username: {{ .User.Username }}
+        }
+        {{end}}
+        {{if .Token}}
+        var csrf_token = {{.Token}}
+        {{end}}
+    </script>
+</head>
+
+<body>
+    <!-- ── SOC Topbar ──────────────────────────────────────── -->
+    {{if .User}}
+    <header class="gp-topbar">
+        <span class="gp-topbar-user">
+            <i class="fa fa-user-circle-o" style="margin-right:5px;opacity:.7;"></i>{{.User.Username}}
+        </span>
+        <button id="gp-theme-toggle" class="gp-topbar-btn" onclick="gpToggleTheme()" title="Toggle dark/light mode">
+            <i class="fa fa-moon-o"></i>
+        </button>
+        <a href="/logout" class="gp-topbar-btn">
+            <i class="fa fa-sign-out"></i> Sign out
+        </a>
+    </header>
+    {{end}}
+
+    <!-- ── Sidebar + Body ─────────────────────────────────── -->
+    {{template "nav" .}}
+    {{template "body" .}}
+
+    <!-- Scripts -->
+    <script src="/js/dist/vendor.min.js"></script>
+    <script src="/js/dist/app/gophish.min.js"></script>
+
+    <!-- Theme toggle logic + active nav detection -->
+    <script>
+    function gpToggleTheme() {
+        var html = document.documentElement;
+        var isDark = html.classList.contains('soc-dark');
+        var icon = document.querySelector('#gp-theme-toggle .fa');
+        if (isDark) {
+            html.classList.remove('soc-dark');
+            localStorage.setItem('gophish.theme', 'default');
+            if (icon) { icon.className = 'fa fa-moon-o'; }
+        } else {
+            html.classList.remove('dark-theme', 'crimson-theme');
+            html.classList.add('soc-dark');
+            localStorage.setItem('gophish.theme', 'soc-dark');
+            if (icon) { icon.className = 'fa fa-sun-o'; }
+        }
+    }
+    // Sync toggle icon with current theme on load
+    (function () {
+        var t = localStorage.getItem('gophish.theme') || 'default';
+        var icon = document.querySelector('#gp-theme-toggle .fa');
+        if (icon) { icon.className = (t === 'soc-dark') ? 'fa fa-sun-o' : 'fa fa-moon-o'; }
+    })();
+    // Mark active sidebar item based on current path
+    (function () {
+        var path = window.location.pathname.replace(/\/$/, '') || '/';
+        var links = document.querySelectorAll('.nav-sidebar > li > a');
+        links.forEach(function (a) {
+            var href = a.getAttribute('href').replace(/\/$/, '') || '/';
+            var li = a.parentElement;
+            li.classList.remove('active');
+            if (path === href || (href !== '/' && path.indexOf(href) === 0)) {
+                li.classList.add('active');
+            }
+        });
+        // Dashboard exact match
+        links.forEach(function (a) {
+            if (a.getAttribute('href') === '/' && path === '/') {
+                a.parentElement.classList.add('active');
+            }
+        });
+    })();
+    </script>
+
+    {{template "scripts" .}}
+</body>
+
+</html>
+{{ end }}

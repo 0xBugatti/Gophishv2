@@ -1,0 +1,58 @@
+services:
+  gophish:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gophish-v2:latest
+    container_name: gophish-v2
+    restart: unless-stopped
+
+    ports:
+      - "3333:3333"   # Admin UI
+      - "80:80"       # Phishing server HTTP
+      - "443:443"     # Phishing server HTTPS (optional)
+
+    volumes:
+      # Persistent SQLite database and generated reports
+      - gophish-data:/opt/gophish/data
+      # Optional: mount TLS certificates at runtime
+      # - ./certs:/opt/gophish/certs:ro
+
+    environment:
+      # ── Admin server ────────────────────────────────────────────────────────
+      ADMIN_LISTEN_URL: "0.0.0.0:3333"
+      ADMIN_USE_TLS: "false"        # Set to true and supply certs for production
+      # ADMIN_CERT_PATH: "certs/admin.crt"
+      # ADMIN_KEY_PATH:  "certs/admin.key"
+      # ADMIN_TRUSTED_ORIGINS: "https://yourdomain.com"
+
+      # ── Phish server ─────────────────────────────────────────────────────────
+      PHISH_LISTEN_URL: "0.0.0.0:80"
+      PHISH_USE_TLS: "false"
+      # PHISH_LISTEN_URL: "0.0.0.0:443"
+      # PHISH_USE_TLS: "true"
+      # PHISH_CERT_PATH: "certs/phish.crt"
+      # PHISH_KEY_PATH:  "certs/phish.key"
+
+      # ── Database ──────────────────────────────────────────────────────────────
+      DB_FILE_PATH: "data/gophish.db"   # SQLite (default)
+      # DB_NAME: "mysql"                 # Switch to MySQL
+      # DB_FILE_PATH: "user:pass@(mysql:3306)/gophish?charset=utf8&parseTime=True&loc=UTC"
+
+      # ── Credential encryption (anglerphish) ──────────────────────────────────
+      # Generate a key with: docker run --rm gophish-v2 ./gophish --generate-encryption-key
+      # ANGLERPHISH_ENCRYPTION_KEY: "your-64-char-hex-key-here"
+
+      # ── Contact ───────────────────────────────────────────────────────────────
+      # CONTACT_ADDRESS: "security@yourcompany.com"
+
+    # Uncomment for healthcheck
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:3333"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+volumes:
+  gophish-data:
+    driver: local

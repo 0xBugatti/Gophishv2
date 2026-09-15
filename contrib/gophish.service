@@ -1,0 +1,19 @@
+[Unit]
+Description=GoPhish Phishing Framework
+After=network.target
+Documentation=https://docs.getgophish.com
+
+[Service]
+Type=simple
+User=gophish
+Group=gophish
+WorkingDirectory=/opt/gophish
+ExecStart=/opt/gophish/gophish
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+Environment=GOPHISH_INITIAL_ADMIN_PASSWORD=
+Environment=GOPHISH_CSRF_KEY=
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,123 @@
+{{define "body"}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="row">
+        <h1 class="page-header">
+            SMS Templates
+        </h1>
+    </div>
+    <div id="flashes" class="row"></div>
+    <div class="row">
+        <button type="button" class="btn btn-primary" onclick="editSMSTemplate(-1)" data-toggle="modal"
+            data-backdrop="static" data-target="#smsModal"><i class="fa fa-plus"></i> New SMS Template</button>
+        <button type="button" class="btn btn-danger" id="deleteSelectedSMSTemplates" style="display:none;"
+            onclick="deleteSelectedSMSTemplates()"><i class="fa fa-trash-o"></i> Delete Selected (<span
+                id="selectedSMSTemplateCount">0</span>)</button>
+    </div>
+    &nbsp;
+    <div id="smsLoading">
+        <i class="fa fa-spinner fa-spin fa-4x"></i>
+    </div>
+    <div id="smsEmptyMessage" class="row" style="display:none;">
+        <div class="alert alert-info">
+            No SMS templates yet. Let's create one!
+        </div>
+    </div>
+    <div class="row">
+        <table id="smsTemplateTable" class="table" style="display:none;">
+            <thead>
+                <tr>
+                    <th class="col-md-1 no-sort"><input type="checkbox" id="selectAllSMSTemplates"></th>
+                    <th>Name</th>
+                    <th>Length</th>
+                    <th>Modified Date</th>
+                    <th class="col-md-2 no-sort"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- SMS Template Modal -->
+<div class="modal fade" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="smsTemplateModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="dismissSMS()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="smsTemplateModalLabel">New SMS Template</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="smsModal.flashes"></div>
+                <label class="control-label" for="smsName">Name:</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="SMS Template name" id="smsName" autofocus />
+                </div>
+                <label class="control-label" for="smsFrom">Sender ID / From:</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Sender name or phone number" id="smsFrom" />
+                </div>
+                <label class="control-label" for="smsText">Message Text:</label>
+                <div class="form-group">
+                    <textarea rows="6" id="smsText" class="form-control"
+                        placeholder="SMS message text. Use {{`{{`}}.FirstName{{`}}`}}, {{`{{`}}.LastName{{`}}`}}, {{`{{`}}.URL{{`}}`}} etc."></textarea>
+                </div>
+                <p class="text-muted"><span id="smsCharCount">0</span> characters / <span id="smsCount">0</span> SMS
+                    message(s)</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default"
+                    onclick="dismissSMS()">Cancel</button>
+                <button type="button" class="btn btn-primary" id="smsModalSubmit">Save SMS Template</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SMS Preview Modal -->
+<div class="modal fade" id="previewSMSModal" tabindex="-1" role="dialog" aria-labelledby="previewSMSModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="previewSMSModalLabel">SMS Template Preview</h4>
+            </div>
+            <div class="modal-body">
+                <div
+                    style="max-width:320px;margin:0 auto;border:2px solid #333;border-radius:30px;padding:15px;background:#000;color:#fff;">
+                    <!-- Status bar -->
+                    <div style="text-align:center;font-size:12px;padding:5px 0;color:#aaa;">
+                        <span id="sms-status-time"></span>
+                    </div>
+                    <!-- Sender info -->
+                    <div style="text-align:center;padding:10px 0;border-bottom:1px solid #333;">
+                        <div id="sms-sender-avatar"
+                            style="width:40px;height:40px;border-radius:50%;background:#4a90d9;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;">
+                        </div>
+                        <div id="sms-sender-name" style="margin-top:5px;font-weight:bold;"></div>
+                    </div>
+                    <!-- Date -->
+                    <div style="text-align:center;padding:8px 0;font-size:11px;color:#888;">
+                        <span id="sms-date"></span>
+                    </div>
+                    <!-- Message bubble -->
+                    <div
+                        style="background:#1a1a2e;border-radius:18px;padding:12px 16px;margin:5px 0;max-width:85%;color:#fff;font-size:14px;line-height:1.4;">
+                        <div id="preview_sms_content" style="white-space:pre-wrap;word-break:break-word;"></div>
+                    </div>
+                    <!-- Read time -->
+                    <div style="text-align:right;font-size:11px;color:#888;padding:4px 0;">
+                        <span id="sms-time"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+{{define "scripts"}}
+<script src="/js/dist/app/sms_templates.min.js"></script>
+{{end}}

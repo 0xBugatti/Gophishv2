@@ -1,0 +1,53 @@
+{{define "nav"}}
+<div class="col-sm-3 col-md-2 sidebar">
+    <!-- Brand -->
+    <a href="/" class="gp-brand">
+        <img src="/images/logo_inv_small.png" alt="Gophish logo">
+        <span class="gp-brand-name">gophish <small class="gp-edition">v2 edition</small></span>
+    </a>
+
+    <!-- Navigation -->
+    <ul class="nav nav-sidebar">
+        <li><a href="/"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+        <li><a href="/campaigns"><i class="fa fa-paper-plane-o"></i> Campaigns</a></li>
+        <li><a href="/campaign_sets"><i class="fa fa-th"></i> Campaign Sets</a></li>
+        <li><a href="/groups"><i class="fa fa-users"></i> Users &amp; Groups</a></li>
+        <li><a href="/templates"><i class="fa fa-envelope-o"></i> Email Templates</a></li>
+        <li><a href="/sms_templates"><i class="fa fa-mobile"></i> SMS Templates</a></li>
+        <li><a href="/landing_pages"><i class="fa fa-file-text-o"></i> Landing Pages</a></li>
+        <li><a href="/sending_profiles"><i class="fa fa-mail-forward"></i> Sending Profiles</a></li>
+        <li><a href="/scenarios"><i class="fa fa-sitemap"></i> Scenarios</a></li>
+        <li><a href="/qr_code_generator"><i class="fa fa-qrcode"></i> QR Codes</a></li>
+        <li><a href="/reports"><i class="fa fa-bar-chart"></i> Reports</a></li>
+        <li><a href="/non_campaign_reports"><i class="fa fa-inbox"></i> IMAP Monitor</a></li>
+        <li><a href="/settings"><i class="fa fa-cog"></i> Settings</a></li>
+        {{if .ModifySystem}}
+        <li><hr></li>
+        <li>
+            <a href="/users">
+                <i class="fa fa-user-secret"></i> User Management
+                <span class="nav-badge badge">Admin</span>
+            </a>
+        </li>
+        <li>
+            <a href="/teams">
+                <i class="fa fa-shield"></i> Team Management
+                <span class="nav-badge badge">Admin</span>
+            </a>
+        </li>
+        <li>
+            <a href="/webhooks">
+                <i class="fa fa-plug"></i> Webhooks
+                <span class="nav-badge badge">Admin</span>
+            </a>
+        </li>
+        {{end}}
+        <li><hr></li>
+        <li><a href="https://docs.getgophish.com/user-guide/" target="_blank"><i class="fa fa-book"></i> User Guide</a></li>
+        <li><a href="/api_documentation"><i class="fa fa-code"></i> API Docs</a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <small>&copy; 2026 Ultimate Gophish. All rights reserved.</small>
+    </div>
+</div>
+{{end}}

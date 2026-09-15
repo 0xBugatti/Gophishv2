@@ -1,0 +1,49 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gophish - Open-Source Phishing Toolkit">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <title>Gophish - {{ .Title }}</title>
+
+    <link href="/css/dist/gophish.css" rel="stylesheet">
+    <link href="/css/soc-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Apply theme before paint -->
+    <script>
+        (function () {
+            var t = localStorage.getItem('gophish.theme') || 'default';
+            if (t === 'soc-dark') document.documentElement.classList.add('soc-dark');
+            else if (t === 'dark-teal') document.documentElement.classList.add('dark-theme');
+        })();
+    </script>
+</head>
+
+<body style="display:flex;align-items:flex-start;justify-content:center;min-height:100vh;">
+    <div class="container" style="max-width:440px;width:100%;">
+        <form class="form-signin" action="" method="POST">
+            <div style="text-align:center;margin-bottom:24px;">
+                <img id="logo" src="/images/logo_purple.png" style="height:56px;margin-bottom:12px;" alt="Gophish"/>
+                <h2 class="form-signin-heading">Sign in</h2>
+            </div>
+            {{template "flashes" .Flashes}}
+            <input type="text" name="username" class="form-control top-input"
+                placeholder="Username" required autofocus autocomplete="username">
+            <input type="password" name="password" class="form-control bottom-input"
+                placeholder="Password" autocomplete="current-password" required>
+            <input type="hidden" name="csrf_token" value="{{.Token}}" />
+            <button class="btn btn-primary btn-block" type="submit" style="margin-top:14px;">
+                Sign in
+            </button>
+        </form>
+    </div>
+    <script src="/js/dist/vendor.min.js"></script>
+</body>
+
+</html>
+{{ end }}
