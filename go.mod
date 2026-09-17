@@ -23,9 +23,9 @@ require (
 	github.com/lib/pq v1.1.1
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/oschwald/maxminddb-golang v1.6.0
-	github.com/sirupsen/logrus v1.8.3
+	github.com/sirupsen/logrus v1.10.2
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.12.1
 	github.com/twilio/twilio-go v1.25.1
 	golang.org/x/crypto v0.57.0
 	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1
@@ -37,7 +37,6 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/andybalholm/cascadia v1.0.0 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emersion/go-textwrapper v0.0.0-20160606182133-d0e65e56babe // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/mock v1.6.0 // indirect
@@ -46,11 +45,10 @@ require (
 	github.com/kylelemons/go-gypsy v0.0.0-20160905020020-08cad365cd28 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/ziutek/mymysql v1.5.4 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/sys v0.48.0 // indirect
 	golang.org/x/text v0.42.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
