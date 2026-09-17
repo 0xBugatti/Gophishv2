@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────
 # Stage 1 – Build JavaScript / CSS assets
 # ─────────────────────────────────────────────
-FROM node:20-alpine AS build-js
+FROM node:26-alpine AS build-js
 
 RUN npm install -g gulp gulp-cli
 
